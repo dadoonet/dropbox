@@ -1,0 +1,56 @@
+{
+   "reset":true,
+   "cursor":"AoCC1fM7abYrMv2VKT7TsRS7MtaSUfVhQZEdGhrfl76xeJxjqtxmysBoGMH87fFiBgbGtwxAggECJPUTi3MUEvPSD6_MySwsTVXIrSwqyczJSS1m_nY1E6QCAAHmEgU",
+   "has_more":false,
+   "entries":[
+      [
+         "/test-es",
+         {
+            "revision":487,
+            "rev":"1e703f6e3a3",
+            "thumb_exists":false,
+            "bytes":0,
+            "modified":"Mon, 30 Jul 2012 19:41:26 +0000",
+            "path":"/test-es",
+            "is_dir":true,
+            "icon":"folder",
+            "root":"dropbox",
+            "size":"0 bytes"
+         }
+      ],
+      [
+         "/test-es/premierspas.pdf",
+         {
+            "revision":490,
+            "rev":"1ea03f6e3a3",
+            "thumb_exists":false,
+            "bytes":234620,
+            "modified":"Sat, 04 Aug 2012 15:35:50 +0000",
+            "client_mtime":"Tue, 13 Sep 2011 14:37:56 +0000",
+            "path":"/test-es/Premierspas.pdf",
+            "is_dir":false,
+            "icon":"page_white_acrobat",
+            "root":"dropbox",
+            "mime_type":"application/pdf",
+            "size":"229.1 KB"
+         }
+      ],
+      [
+         "/test-es/crreunion-2011-07-04.pdf",
+         {
+            "revision":493,
+            "rev":"1ed03f6e3a3",
+            "thumb_exists":false,
+            "bytes":221491,
+            "modified":"Mon, 06 Aug 2012 21:58:44 +0000",
+            "client_mtime":"Sat, 24 Sep 2011 06:18:24 +0000",
+            "path":"/test-es/CRReunion-2011-07-04.pdf",
+            "is_dir":false,
+            "icon":"page_white_acrobat",
+            "root":"dropbox",
+            "mime_type":"application/pdf",
+            "size":"216.3 KB"
+         }
+      ]
+   ]
+}
