@@ -1,5 +1,5 @@
 /*
- * Licensed to scrutmydocs.org (the "Author") under one
+ * Licensed to David Pilato (the "Author") under one
  * or more contributor license agreements.  See the NOTICE file
  * distributed with this work for additional information
  * regarding copyright ownership. Author licenses this
