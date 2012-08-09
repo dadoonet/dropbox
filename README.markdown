@@ -5,8 +5,8 @@ Welcome to the Dropbox River Plugin for [Elasticsearch](http://www.elasticsearch
 
 This river plugin helps to index documents from your dropbox account.
 
-*WARNING*: starting from 0.0.1, you need to have the [Attachment Plugin](https://github.com/elasticsearch/elasticsearch-mapper-attachments). It's not included anymore
-in the distribution.
+*WARNING*: You need to have the [Attachment Plugin](https://github.com/elasticsearch/elasticsearch-mapper-attachments).
+
 
 Versions
 --------
