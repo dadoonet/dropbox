@@ -56,7 +56,7 @@ title_in_header: false
     
     
     <div class="img_right">
-        <img height="120px" src="/dropbox/images/set3/hd2.png" alt="" />
+        <img height="120px" src="/dropbox/images/set3/dropbox.png" alt="" />
         <div class="text">
             <h2>
                 Dropbox River Plugin
@@ -69,26 +69,44 @@ title_in_header: false
                 It reads your files from a given dir at a given rate.
             </p>
             <p>
-            	As all rivers, it's quite simple to create an FS River :
+            	As all rivers, it's quite simple to create an Dropbox River :
             </p>
             <ul>
+            <li>Install the <a href="https://github.com/elasticsearch/elasticsearch-mapper-attachments">mapper attachment plugin</a></li>
             <li>Install the plugin and start Elasticsearch</li>
+            <li>Create or use a Dropbox application</li>
+            <li>Get authorization from the user to connect your application to its dropbox</li>
             <li>Create your index (with mapping if needed)</li>
             <li>Define the river</li>
             <li>Search for files</li>
             </ul>
-            <pre class="prettyprint lang-bsh">
-            
-$ bin\plugin -install dadoonet/fsriver/0.0.2
+<pre class="prettyprint lang-bsh">
+$ bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/1.4.0
 
-$ bin\elasticsearch
+$ bin/plugin -install dadoonet/dropbox/0.0.1-SNAPSHOT
 
+$ bin/elasticsearch
+</pre>
+
+Create your <a href="https://www.dropbox.com/developers/apps">Dropbox Application</a> and note your <b>AppKey</b> and <b>AppSecret</b>.
+
+<pre class="prettyprint lang-bsh">
+$ curl http://localhost:9200/_dropbox/oauth/AppKey/AppSecret
+</pre>
+
+Open the URL you just get back and note the <b>token</b> and <b>secret</b>. You are now ready to create the dropbox river for your user.
+
+<pre class="prettyprint lang-bsh">
 $ curl -XPUT 'localhost:9200/mydocs/' -d '{}'
 
 $ curl -XPUT 'localhost:9200/_river/mydocs/_meta' -d '{
-  "type": "fs",
-  "fs": {
-	"name": "My tmp dir",
+  "type": "dropbox",
+  "dropbox": {
+    "appkey": "AAAAAAAAAAAAAAAA",
+    "appsecret": "BBBBBBBBBBBBBBBB",
+    "token": "XXXXXXXXXXXXXXXX",
+    "secret": "YYYYYYYYYYYYYYYY",
+	"name": "My tmp dropbox dir",
 	"url": "/tmp",
 	"update_rate": 900000,
 	"includes": "*.doc,*.pdf",
@@ -103,18 +121,21 @@ $ curl -XGET 'http://localhost:9200/mydocs/_search?q=taxe'
 
 <pre class="prettyprint lang-bsh">
 $ curl -XPUT 'localhost:9200/_river/mysecondriver/_meta' -d '{
-  "type": "fs",
-  "fs": {
-	"name": "My second tmp dir",
+  "type": "dropbox",
+  "dropbox": {
+    "appkey": "AAAAAAAAAAAAAAAA",
+    "appsecret": "BBBBBBBBBBBBBBBB",
+    "token": "2XXXXXXXXXXXXXXX",
+    "secret": "2YYYYYYYYYYYYYYY",
+	"name": "My tmp2 dropbox dir",
 	"url": "/tmp2",
 	"update_rate": 3600000,
-	"includes": "*.doc,*.pdf",
-	"excludes": "resume"
+	"includes": [ "*.doc" , "*.xls", "*.pdf" ]
   },
   "index": {
-    "index": "mydocs",
-    "type": "doc",
-    "bulk_size": 20
+  	"index": "mydocs",
+  	"type": "doc",
+  	bulk_size: 50
   }
 }'
 </pre>
