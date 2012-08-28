@@ -106,18 +106,18 @@ $ curl -XPUT 'localhost:9200/_river/mydocs/_meta' -d '{
     "appsecret": "BBBBBBBBBBBBBBBB",
     "token": "XXXXXXXXXXXXXXXX",
     "secret": "YYYYYYYYYYYYYYYY",
-	"name": "My tmp dropbox dir",
-	"url": "/tmp",
-	"update_rate": 900000,
-	"includes": "*.doc,*.pdf",
-	"excludes": "resume"
+    "name": "My tmp dropbox dir",
+    "url": "/tmp",
+    "update_rate": 900000,
+    "includes": "*.doc,*.pdf",
+    "excludes": "resume"
   }
 }'
 
 $ curl -XGET 'http://localhost:9200/mydocs/_search?q=taxe'
 </pre>
 
-<p>You can define more than one river if you need to index from different directories :</p>
+<p>You can define more than one river if you need to index different directories :</p>
 
 <pre class="prettyprint lang-bsh">
 $ curl -XPUT 'localhost:9200/_river/mysecondriver/_meta' -d '{
@@ -127,20 +127,20 @@ $ curl -XPUT 'localhost:9200/_river/mysecondriver/_meta' -d '{
     "appsecret": "BBBBBBBBBBBBBBBB",
     "token": "2XXXXXXXXXXXXXXX",
     "secret": "2YYYYYYYYYYYYYYY",
-	"name": "My tmp2 dropbox dir",
-	"url": "/tmp2",
-	"update_rate": 3600000,
-	"includes": [ "*.doc" , "*.xls", "*.pdf" ]
+    "name": "My tmp2 dropbox dir",
+    "url": "/tmp2",
+    "update_rate": 3600000,
+    "includes": [ "*.doc" , "*.xls", "*.pdf" ]
   },
   "index": {
-  	"index": "mydocs",
-  	"type": "doc",
-  	bulk_size: 50
+    "index": "mydocs",
+    "type": "doc",
+    bulk_size: 50
   }
 }'
 </pre>
 
-Have a look at the <a href="https://github.com/dadoonet/dropbox/blob/master/README.textile">reference guide</a> for more information.
+Have a look at the <a href="https://github.com/dadoonet/dropbox/blob/master/README.markdown">reference guide</a> for more information.
 
         </div>
     </div>
