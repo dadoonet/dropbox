@@ -428,7 +428,7 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 		 * Index a file
 		 * 
 		 * @param stats
-		 * @param file
+		 * @param dropboxFile
 		 * @throws Exception
 		 */
 		private void indexFile(ScanStatistic stats, DropboxFile dropboxFile) throws Exception {

@@ -105,7 +105,7 @@ public class UserInfoTest {
 	
 	@Test
 	public void getFile() {
-		byte[] file = dbConnector.getFiles("dropbox", "/test-es/premierspas.pdf");
+		byte[] file = dbConnector.getFiles("dropbox", "/test-es/Premierspas.pdf");
 		Assert.assertNotNull(file);
 		// write(file, "premierspas.pdf");
 		

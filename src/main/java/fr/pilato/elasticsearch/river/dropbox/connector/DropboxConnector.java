@@ -127,8 +127,8 @@ public class DropboxConnector {
 	/**
 	 * OAuth : Step 3 : After user authorization on DropBox site,
 	 * get an Access Token on APIs
+     * <br/>(see <a href="https://www.dropbox.com/developers/apps">DropBox API</a>)
 	 * @return The connector to chain actions
-	 * @see https://www.dropbox.com/developers/apps
 	 */
 	public DropboxConnector computeAccessToken() {
 		Verifier verifier = new Verifier("verifier you got from the user");
@@ -138,14 +138,13 @@ public class DropboxConnector {
 
 	/**
 	 * Get user's account information
+     * <br/>(see <a href="https://www.dropbox.com/developers/apps">DropBox API</a>)
 	 * @return DropBox Account Details
-	 * @see https://www.dropbox.com/developers/apps
 	 */
 	public DropboxAccount getUserInfo() {
 		Response response = getResponse(Verb.GET, "https://api.dropbox.com/1/account/info", (PostOption[]) null);
 		Map<String, Object> map = XContentHelper.convertToMap(response.getBody().getBytes(), 0, response.getBody().length(), false).v2();
-		DropboxAccount account = new DropboxAccount(map);
-		return account;
+		return new DropboxAccount(map);
 	}
 
 	public byte[] getFiles(String root, String path) {
@@ -156,7 +155,7 @@ public class DropboxConnector {
     private byte[] getContent(Response response) {
         ByteArrayOutputStream bos = null;
         long totalRead = 0;
-        long length = Long.parseLong(response.getHeader("content-length"));
+        long length = Long.parseLong(response.getHeader("Content-Length"));
         InputStream is = response.getStream();
         
         try {

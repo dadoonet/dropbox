@@ -28,7 +28,7 @@ public class DropboxRiverTest extends AbstractDropboxRiverSimpleTest {
 
 	@Override
 	public long waitingTime() throws Exception {
-		return 5000;
+		return 30;
 	}
 	
 	/**
