@@ -29,6 +29,8 @@ import java.util.Map;
 
 import org.elasticsearch.common.xcontent.XContentHelper;
 import org.elasticsearch.common.xcontent.support.XContentMapValues;
+import org.elasticsearch.common.logging.ESLogger;
+import org.elasticsearch.common.logging.Loggers;
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.builder.api.DropBoxApi;
 import org.scribe.model.OAuthRequest;
@@ -52,6 +54,8 @@ import org.scribe.oauth.OAuthService;
  *
  */
 public class DropboxConnector {
+
+	private static final ESLogger logger = Loggers.getLogger(DropboxConnector.class);
 
 	private final String appkey;
 	private final String appsecret;
@@ -218,7 +222,7 @@ public class DropboxConnector {
             target = target.replace("+", "%20").replace("*", "%2A");
 			return target;
 		} catch (UnsupportedEncodingException e) {
-			// TODO Add warn to logger
+			logger.warn("cannot encode {}", path);
 		}
 		return path;
 	}
@@ -234,16 +238,16 @@ public class DropboxConnector {
 			if (cursor != null) option = new PostOption("cursor", cursor);
 			
 			Response response = getResponse(Verb.POST, "https://api.dropbox.com/1/delta", option);
+
+			if (logger.isDebugEnabled())
+				logger.debug("get delta from {}: {}", cursor, response.getBody());
+
 			Map<String, Object> map = XContentHelper.convertToMap(response.getBody().getBytes(), 0, response.getBody().length(), false).v2();
 			Object oCursor = XContentMapValues.extractValue("cursor", map);
 			Object oHasMore = XContentMapValues.extractValue("has_more", map);
 			
-			if (oHasMore != null) {
-				hasMore = (Boolean) oHasMore;
-				 cursor = (String) oCursor;
-			} else {
-				hasMore = false;
-			}
+			hasMore = (oHasMore != null && (Boolean) oHasMore);
+			cursor = (String) oCursor;
 			
 			// We get some entries here
 			Object oEntries = XContentMapValues.extractValue("entries", map);
@@ -322,8 +326,9 @@ public class DropboxConnector {
 			throw new RuntimeException("Dropbox HTTP Error " + response.getCode() + " : " + response.getBody());
 		}
 		
-		// TODO Add to log.debug
-		// System.out.println(response.getBody());
+		// too much information (don't really want the datafile to be logged)
+		//if (logger.isDebugEnabled())
+		//    logger.debug("getResponse {} {}: {}", verb, url, response.getBody());
 		
 		return response;
 	}
