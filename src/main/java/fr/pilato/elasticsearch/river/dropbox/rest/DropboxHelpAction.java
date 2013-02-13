@@ -19,20 +19,16 @@
 
 package fr.pilato.elasticsearch.river.dropbox.rest;
 
-import java.io.IOException;
-
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentBuilderString;
-import org.elasticsearch.rest.RestChannel;
-import org.elasticsearch.rest.RestController;
-import org.elasticsearch.rest.RestRequest;
+import org.elasticsearch.rest.*;
 import org.elasticsearch.rest.RestRequest.Method;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.rest.XContentRestResponse;
 import org.elasticsearch.rest.action.support.RestXContentBuilder;
+
+import java.io.IOException;
 
 public class DropboxHelpAction extends DropboxAction {
 
@@ -59,12 +55,12 @@ public class DropboxHelpAction extends DropboxAction {
 						.endObject()
 						.startObject()
 							.field(new XContentBuilderString("method"), "GET")
-							.field(new XContentBuilderString("endpoint"), "/_dropbox/oauth1/{appkey}/{appsecret}")
-							.field(new XContentBuilderString("comment"), "Return the OAuth url to display to user")
+							.field(new XContentBuilderString("endpoint"), "/_dropbox/oauth/{appkey}/{appsecret}")
+							.field(new XContentBuilderString("comment"), "Return the OAuth token, secret and url you should redirect your user to")
 						.endObject()
 						.startObject()
 							.field(new XContentBuilderString("method"), "GET")
-							.field(new XContentBuilderString("endpoint"), "/_dropbox/oauth2/{requesttoken}/{requestsecret}/{appkey}/{appsecret}")
+							.field(new XContentBuilderString("endpoint"), "/_dropbox/oauth/{appkey}/{appsecret}/{oauth_token}/{oauth_secret}")
 							.field(new XContentBuilderString("comment"), "Return the OAuth token/secret for user")
 						.endObject()
 					.endArray()
