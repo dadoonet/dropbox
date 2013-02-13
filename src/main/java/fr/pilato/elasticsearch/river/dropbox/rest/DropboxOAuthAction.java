@@ -19,23 +19,18 @@
 
 package fr.pilato.elasticsearch.river.dropbox.rest;
 
-import java.io.IOException;
-
+import fr.pilato.elasticsearch.river.dropbox.connector.DropboxConnector;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentBuilderString;
-import org.elasticsearch.rest.RestChannel;
-import org.elasticsearch.rest.RestController;
-import org.elasticsearch.rest.RestRequest;
+import org.elasticsearch.rest.*;
 import org.elasticsearch.rest.RestRequest.Method;
-import org.elasticsearch.rest.RestStatus;
-import org.elasticsearch.rest.XContentRestResponse;
 import org.elasticsearch.rest.action.support.RestXContentBuilder;
 import org.scribe.model.Token;
 
-import fr.pilato.elasticsearch.river.dropbox.connector.DropboxConnector;
+import java.io.IOException;
 
 public class DropboxOAuthAction extends DropboxAction {
 
@@ -44,7 +39,7 @@ public class DropboxOAuthAction extends DropboxAction {
 
 		// Define Dropbox REST Endpoints
 		controller.registerHandler(Method.GET, "/_dropbox/oauth/{appkey}/{appsecret}", this);
-		controller.registerHandler(Method.GET, "/_dropbox/oauth/{appkey}/{appsecret}/{oauth_secret}/", this);
+		controller.registerHandler(Method.GET, "/_dropbox/oauth/{appkey}/{appsecret}/{oauth_token}/{oauth_secret}/", this);
 	}
 
 	@Override
@@ -53,7 +48,6 @@ public class DropboxOAuthAction extends DropboxAction {
 
 		String appkey = request.param("appkey");
 		String appsecret = request.param("appsecret");
-		String callback = request.uri();
 		String oauth_token = request.param("oauth_token");
 		String oauth_secret = request.param("oauth_secret");
 		
@@ -77,10 +71,12 @@ public class DropboxOAuthAction extends DropboxAction {
 			} else {
 				// It's the first call. We build the Auth URL
 				DropboxConnector dbConn = new DropboxConnector(appkey, appsecret);
-				String authUrl = dbConn.getAuthUrl() + "&oauth_callback=http://" + request.header("host") + callback + "/" + dbConn.getRequestToken().getSecret() + "/";
+				String authUrl = dbConn.getAuthUrl();
 				
 				builder
 					.startObject()
+                        .field(new XContentBuilderString("oauth_token"), dbConn.getRequestToken().getToken())
+                        .field(new XContentBuilderString("oauth_secret"), dbConn.getRequestToken().getSecret())
 						.field(new XContentBuilderString("url"), authUrl)
 					.endObject();
 			}

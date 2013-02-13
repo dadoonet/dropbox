@@ -21,7 +21,12 @@ Versions
 	</thead>
 	<tbody>
 		<tr>
-			<td>master (0.0.1)</td>
+			<td>master (0.2.0)</td>
+			<td>0.20.4</td>
+			<td>1.6.0</td>
+		</tr>
+		<tr>
+			<td>0.1.0</td>
 			<td>0.20.4</td>
 			<td>1.6.0</td>
 		</tr>
@@ -44,20 +49,23 @@ Installation
 Just type :
 
 ```sh
-$ bin/plugin -install dadoonet/dropbox/0.0.1-SNAPSHOT
+$ bin/plugin -install fr.pilato.elasticsearch.river/dropboxriver/0.1.0
 ```
 
 This will do the job...
 
 ```
--> Installing dadoonet/dropbox/0.0.1-SNAPSHOT...
-Trying https://github.com/downloads/dadoonet/dropbox/dropbox-0.0.1-SNAPSHOT.zip...
-Downloading ...DONE
+-> Installing fr.pilato.elasticsearch.river/dropbox/0.1.0...
+Trying http://download.elasticsearch.org/fr.pilato.elasticsearch.river/dropbox/dropbox-0.1.0.zip...
+Trying http://search.maven.org/remotecontent?filepath=fr/pilato/elasticsearch/river/dropbox/0.1.0/dropbox-0.1.0.zip...
+Trying https://oss.sonatype.org/service/local/repositories/releases/content/fr/pilato/elasticsearch/river/dropbox/0.1.0/dropbox-0.1.0.zip...
+Downloading ......DONE
 Installed dropbox
 ```
 
- Get Dropbox credentials (token and secret)
--------------------------------------------
+
+Get Dropbox credentials (token and secret)
+------------------------------------------
 
 First, you need to create your own application in [Dropbox Developers](https://www.dropbox.com/developers/apps).
 
@@ -75,12 +83,27 @@ You will get back a URL:
 
 ```javascript
 {
-  "url" : "https://www.dropbox.com/1/oauth/authorize?oauth_token=OAUTHTOKEN&oauth_callback=http://localhost:9200/_dropbox/oauth/apptoken/appsecret/secret/"
+  "oauth_token":"OAUTHTOKEN",
+  "oauth_secret":"OAUTHSECRET",
+  "url" : "https://www.dropbox.com/1/oauth/authorize?oauth_token=OAUTHTOKEN"
 }
 ```
 
-Open the URL in your browser. You will be asked by Dropbox to Allow your application to access to your dropbox account. 
-Then, you will be redirected to the _dropbox REST Endpoint which will give you your user token and secret:
+Open the URL in your browser. You will be asked by Dropbox to Allow your application to access to your dropbox account.
+If you have added to the url a `oauth_callback` parameter, Dropbox will redirect your user to this end point.
+
+For example,
+`https://www.dropbox.com/1/oauth/authorize?oauth_token=OAUTHTOKEN&oauth_callback=http://yourwebserver/callback` will
+redirect your user to `http://yourwebserver/callback` if your user allows your application to have an access to its
+Dropbox folders.
+
+Once you get back the success reply from Dropbox, you can get the user Token and Secret by calling
+
+```sh
+$ curl http://localhost:9200/_dropbox/oauth/apptoken/appsecret/OAUTHTOKEN/OAUTHSECRET
+```
+
+You will get back a JSON document like the following:
 
 ```javascript
 {
@@ -186,7 +209,7 @@ This is a common use case in elasticsearch, we want to search for something ;-)
 ```sh
 $ curl -XGET http://localhost:9200/docs/doc/_search -d '{
   "query" : {
-    "text" : {
+    "match" : {
         "_all" : "I am searching for something !"
     }
   }
@@ -333,7 +356,7 @@ To send mapping to Elasticsearch, refer to the [Put Mapping API](http://www.elas
 Meta fields
 -----------
 
-FS River creates some meta fields :
+Dropbox River creates some meta fields :
 
 <table>
 	<thead>
@@ -401,7 +424,7 @@ License
 ```
 This software is licensed under the Apache 2 license, quoted below.
 
-Copyright 2011-2012 David Pilato
+Copyright 2011-2013 David Pilato
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not
 use this file except in compliance with the License. You may obtain a copy of
