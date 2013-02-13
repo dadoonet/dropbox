@@ -19,17 +19,10 @@
 
 package fr.pilato.elasticsearch.river.dropbox.river;
 
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
-
-import java.net.MalformedURLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Map;
-
+import fr.pilato.elasticsearch.river.dropbox.connector.DropboxAccount;
+import fr.pilato.elasticsearch.river.dropbox.connector.DropboxChanges;
+import fr.pilato.elasticsearch.river.dropbox.connector.DropboxConnector;
+import fr.pilato.elasticsearch.river.dropbox.connector.DropboxFile;
 import org.elasticsearch.ExceptionsHelper;
 import org.elasticsearch.action.admin.indices.mapping.put.PutMappingResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
@@ -51,10 +44,16 @@ import org.elasticsearch.river.River;
 import org.elasticsearch.river.RiverName;
 import org.elasticsearch.river.RiverSettings;
 
-import fr.pilato.elasticsearch.river.dropbox.connector.DropboxAccount;
-import fr.pilato.elasticsearch.river.dropbox.connector.DropboxChanges;
-import fr.pilato.elasticsearch.river.dropbox.connector.DropboxConnector;
-import fr.pilato.elasticsearch.river.dropbox.connector.DropboxFile;
+import java.net.MalformedURLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Map;
+
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
  * @author dadoonet (David Pilato)
