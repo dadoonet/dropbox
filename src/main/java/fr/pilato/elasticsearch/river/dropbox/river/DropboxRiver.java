@@ -61,8 +61,8 @@ import fr.pilato.elasticsearch.river.dropbox.connector.DropboxFile;
  */
 public class DropboxRiver extends AbstractRiverComponent implements River {
 
-    private static final DateFormat dropboxDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss ZZZZZ", Locale.US);
-    
+	private static final DateFormat dropboxDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss ZZZZZ", Locale.US);
+
 	private final Client client;
 
 	private final String indexName;
@@ -288,7 +288,7 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 					String lastupdateField = "_cursor";
 					String cursor = getCursorFromRiver(lastupdateField);
 
-					scan(fsDefinition.getUrl(), cursor);
+					cursor = scan(fsDefinition.getUrl(), cursor);
 
 					updateFsRiver(lastupdateField, cursor);
 
@@ -339,11 +339,19 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 			} catch (Exception e) {
 				logger.warn("failed to get _cursor, throttling....", e);
 			}
+
+			if (logger.isDebugEnabled())
+				logger.debug("cursor: {}", cursor);
+
 			return cursor;
 		}
 
 		private void updateFsRiver(String lastupdateField, String cursor)
 				throws Exception {
+
+			if (logger.isDebugEnabled())
+				logger.debug("updating cursor: {}", cursor);
+
 			// We store the lastupdate date and some stats
 			XContentBuilder xb = jsonBuilder()
 				.startObject()
@@ -393,7 +401,7 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 			}
 		}
 
-		private void scan(String path, String cursor) throws Exception {
+		private String scan(String path, String cursor) throws Exception {
 
 			DropboxChanges changes = dropbox.getDelta(cursor);
 
@@ -422,6 +430,8 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 					}					
 				}
 			}
+
+			return changes.getCursor();
 		}
 
 		/**
