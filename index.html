@@ -81,9 +81,9 @@ title_in_header: false
             <li>Search for files</li>
             </ul>
 <pre class="prettyprint lang-bsh">
-$ bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/1.4.0
+$ bin/plugin -install elasticsearch/elasticsearch-mapper-attachments/1.6.0
 
-$ bin/plugin -install dadoonet/dropbox/0.0.1-SNAPSHOT
+$ bin/plugin -install fr.pilato.elasticsearch.river/dropbox/0.1.0
 
 $ bin/elasticsearch
 </pre>
@@ -94,7 +94,38 @@ Create your <a href="https://www.dropbox.com/developers/apps">Dropbox Applicatio
 $ curl http://localhost:9200/_dropbox/oauth/AppKey/AppSecret
 </pre>
 
-Open the URL you just get back and note the <b>token</b> and <b>secret</b>. You are now ready to create the dropbox river for your user.
+You will get back oauth credentials and a URL.
+
+<pre class="prettyprint lang-javascript">
+{
+  "oauth_token":"OAUTHTOKEN",
+  "oauth_secret":"OAUTHSECRET",
+  "url" : "https://www.dropbox.com/1/oauth/authorize?oauth_token=OAUTHTOKEN"
+}
+</pre>
+
+Open the URL you just get back. 
+
+<p>Note that you can redirect your user to your desired page using <b>oauth_callback</b>.
+
+<p> For example, <i>https://www.dropbox.com/1/oauth/authorize?oauth_token=OAUTHTOKEN&oauth_callback=http://yourwebserver/callback</i> will redirect your user to <i>http://yourwebserver/callback</i> if your user allows your application to have an access to its Dropbox folders.
+
+<p>Once you get back the success reply from Dropbox, you can get the user Token and Secret by calling
+
+<pre class="prettyprint lang-bsh">
+$ curl http://localhost:9200/_dropbox/oauth/apptoken/appsecret/OAUTHTOKEN/OAUTHSECRET
+</pre>
+
+You will get back a JSON document like the following:
+
+<pre class="prettyprint lang-javascript">
+{
+  "token" : "yourtoken",
+  "secret" : "yoursecret"
+}
+</pre>
+
+You are now ready to create the river:
 
 <pre class="prettyprint lang-bsh">
 $ curl -XPUT 'localhost:9200/mydocs/' -d '{}'
