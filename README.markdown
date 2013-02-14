@@ -49,7 +49,7 @@ Installation
 Just type :
 
 ```sh
-$ bin/plugin -install fr.pilato.elasticsearch.river/dropboxriver/0.1.0
+$ bin/plugin -install fr.pilato.elasticsearch.river/dropbox/0.1.0
 ```
 
 This will do the job...

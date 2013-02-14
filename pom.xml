@@ -13,11 +13,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>fr.pilato.elasticsearch.river</groupId>
-	<artifactId>dropboxriver</artifactId>
+	<artifactId>dropbox</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1.0</version>
 	<name>Dropbox River Plugin for ElasticSearch</name>
-	<url>https://github.com/dadoonet/dropboxriver</url>
+	<url>https://github.com/dadoonet/dropbox</url>
 	
 	<parent>
 		<groupId>org.sonatype.oss</groupId>
@@ -57,14 +57,15 @@
 	</developers>
 	
 	<scm>
-		<connection>scm:git:git@github.com:dadoonet/dropboxriver.git</connection>
-		<url>scm:git:git@github.com:dadoonet/dropboxriver.git</url>
-		<developerConnection>scm:git:git@github.com:dadoonet/dropboxriver.git</developerConnection>
-	</scm>
+		<connection>scm:git:git@github.com:dadoonet/dropbox.git</connection>
+		<url>scm:git:git@github.com:dadoonet/dropbox.git</url>
+		<developerConnection>scm:git:git@github.com:dadoonet/dropbox.git</developerConnection>
+	  <tag>dropbox-0.1.0</tag>
+  </scm>
 	
 	<issueManagement>
 		<system>GitHub</system>
-		<url>https://github.com/dadoonet/dropboxriver/issues/</url>
+		<url>https://github.com/dadoonet/dropbox/issues/</url>
 	</issueManagement>
 	
 	<build>
