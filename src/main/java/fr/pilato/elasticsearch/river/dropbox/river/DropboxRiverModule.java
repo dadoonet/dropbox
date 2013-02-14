@@ -23,7 +23,7 @@ import org.elasticsearch.common.inject.AbstractModule;
 import org.elasticsearch.river.River;
 
 /**
- * @author kimchy (shay.banon)
+ * @author dadoonet (David Pilato)
  */
 public class DropboxRiverModule extends AbstractModule {
 

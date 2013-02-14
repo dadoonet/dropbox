@@ -19,15 +19,14 @@
 
 package fr.pilato.elasticsearch.river.dropbox.plugin;
 
+import fr.pilato.elasticsearch.river.dropbox.rest.DropboxHelpAction;
+import fr.pilato.elasticsearch.river.dropbox.rest.DropboxOAuthAction;
+import fr.pilato.elasticsearch.river.dropbox.river.DropboxRiverModule;
 import org.elasticsearch.common.inject.Inject;
 import org.elasticsearch.common.inject.Module;
 import org.elasticsearch.plugins.AbstractPlugin;
 import org.elasticsearch.rest.RestModule;
 import org.elasticsearch.river.RiversModule;
-
-import fr.pilato.elasticsearch.river.dropbox.rest.DropboxHelpAction;
-import fr.pilato.elasticsearch.river.dropbox.rest.DropboxOAuthAction;
-import fr.pilato.elasticsearch.river.dropbox.river.DropboxRiverModule;
 
 /**
  * @author dadoonet (David Pilato)
@@ -49,6 +48,7 @@ public class DropboxRiverPlugin extends AbstractPlugin {
         if (module instanceof RiversModule) {
             ((RiversModule) module).registerRiver("dropbox", DropboxRiverModule.class);
         }
+
         if (module instanceof RestModule) {
             ((RestModule) module).addRestAction(DropboxHelpAction.class);
             ((RestModule) module).addRestAction(DropboxOAuthAction.class);
