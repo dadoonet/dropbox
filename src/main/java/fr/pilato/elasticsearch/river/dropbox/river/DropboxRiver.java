@@ -235,7 +235,7 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 					.setType(type)
 					.setSource(xcontent)
 					.execute().actionGet();			
-				if (!response.acknowledged()) {
+				if (!response.isAcknowledged()) {
 					throw new Exception("Could not define mapping for type ["+index+"]/["+type+"].");
 				} else {
 					if (logger.isDebugEnabled()) {
@@ -320,9 +320,9 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 				GetResponse lastSeqGetResponse = client
 						.prepareGet("_river", riverName().name(),
 								lastupdateField).execute().actionGet();
-				if (lastSeqGetResponse.exists()) {
+				if (lastSeqGetResponse.isExists()) {
 					Map<String, Object> fsState = (Map<String, Object>) lastSeqGetResponse
-							.sourceAsMap().get("dropbox");
+							.getSourceAsMap().get("dropbox");
 
 					if (fsState != null) {
 						Object lastupdate = fsState.get("cursor");
