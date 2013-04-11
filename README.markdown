@@ -69,6 +69,10 @@ Get Dropbox credentials (token and secret)
 
 First, you need to create your own application in [Dropbox Developers](https://www.dropbox.com/developers/apps).
 
+If you create a **Full Dropbox** application, you will have access to all folders.
+
+If you create a **App folder** application, you will only have access to *your app* folder files. You will get `Dropbox HTTP Error 403 : {"error": "Forbidden"}` errors when accessing to other folders.
+
 Note your `AppKey` and your `AppSecret`.
 
 You need then to get an Authorization from the user for this new Application.
