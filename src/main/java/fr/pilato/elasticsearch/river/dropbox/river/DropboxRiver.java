@@ -182,7 +182,7 @@ public class DropboxRiver extends AbstractRiverComponent implements River {
 
 		// We create as many Threads as there are feeds
 		feedThread = EsExecutors.daemonThreadFactory(
-				settings.globalSettings(), "fs_slurper")
+				settings.globalSettings(), "dropbox_slurper")
 				.newThread(
 						new DropBoxParser());
 		feedThread.start();
