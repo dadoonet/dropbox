@@ -1,4 +1,4 @@
-Dropbox River for Elasticsearch
+Dropbox River for Elasticsearch (PROJECT STOPPED)
 ===============================
 
 Welcome to the Dropbox River Plugin for [Elasticsearch](http://www.elasticsearch.org/)
